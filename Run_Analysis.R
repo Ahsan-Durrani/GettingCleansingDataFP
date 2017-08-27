@@ -40,8 +40,8 @@ Mergeddatset <- rbind(Train,Test)
 
 # 2.  Mean & SD COlumn for the Merged data set
 MeanSDColumns <- grepl("mean\\(\\)", names(Mergeddatset)) | grepl("std\\(\\)", names(Mergeddatset))
-meansdcolumns[1:2] <- TRUE
-Mergeddatset <- Mergeddatset[, meansdcolumns]
+MeanSDColumns[1:2] <- TRUE
+Mergeddatset <- Mergeddatset[, MeanSDColumns]
 
 
 #3. Uses descriptive activity names to name the activities in the data set
@@ -57,3 +57,7 @@ tidy <- dcast(melt, subjectID+activity ~ variable, mean)
 # export to a file
 write.csv(tidy, "tidy.csv", row.names=FALSE)
 write.table(tidy, "tidy.txt", row.names=FALSE)
+
+#generate codebookx
+x <- summary(Mergeddatset)
+capture.output(x,file = "codebook.txt")
